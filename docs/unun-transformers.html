@@ -1,1 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HF Vertical Designer – Transformer & UNUN Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#020617;color:#e5e7eb;line-height:1.55;}
+header{padding:16px 20px;background:#0f172a;border-bottom:1px solid #1f2937;}
+h1{margin:0;font-size:1.45rem;}
+main{padding:22px;max-width:900px;margin:auto;}
+section{margin-bottom:34px;}
+h2{font-size:1.25rem;margin-bottom:8px;border-bottom:1px solid #1f2937;padding-bottom:4px;}
+h3{font-size:1.05rem;margin-top:14px;margin-bottom:6px;color:#93c5fd;}
+p{font-size:0.95rem;color:#cbd5e1;margin-bottom:10px;}
+ul{margin-top:6px;margin-bottom:10px;}
+li{margin-bottom:4px;}
+code{background:#1e293b;padding:2px 4px;border-radius:4px;font-size:0.85rem;color:#93c5fd;}
+.box{background:#0b1120;border:1px solid #1f2937;border-radius:6px;padding:12px;margin-top:10px;}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.9rem;}
+th,td{border:1px solid #1f2937;padding:6px 8px;text-align:left;}
+th{background:#0b1120;}
+a{color:#38bdf8;text-decoration:none;}
+a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<header>
+  <h1>Transformer & UNUN Selection Guide</h1>
+</header>
+
+<main>
+
+<section>
+  <p>
+    This guide explains how to choose the correct transformer or UNUN for your vertical antenna.  
+    Transformer selection is one of the most important decisions in portable HF operation —  
+    the wrong ratio can cause high SWR, wasted power, and overheated cores.
+  </p>
+</section>
+
+<section>
+  <h2>1. What Transformers Do</h2>
+  <p>
+    Transformers and UNUNs convert the antenna’s feedpoint impedance to something closer to 50 Ω.  
+    Each antenna type produces a different impedance range, so choosing the correct ratio is essential.
+  </p>
+
+  <div class="box">
+    <strong>Rule:</strong>  
+    Match the transformer ratio to the expected feedpoint impedance of the antenna length and type.
+  </div>
+</section>
+
+<section>
+  <h2>2. Common Transformer Ratios</h2>
+
+  <table>
+    <tr>
+      <th>Ratio</th>
+      <th>Impedance Range</th>
+      <th>Used For</th>
+      <th>Notes</th>
+    </tr>
+    <tr>
+      <td>1:1 Balun</td>
+      <td>50–75 Ω</td>
+      <td>Vertical dipoles, OCF vertical dipoles</td>
+      <td>Balanced antennas only</td>
+    </tr>
+    <tr>
+      <td>4:1 UNUN</td>
+      <td>150–600 Ω</td>
+      <td>17.5 ft, 20.5 ft, 25 ft Rybakov family</td>
+      <td>Most stable for non-resonant verticals</td>
+    </tr>
+    <tr>
+      <td>9:1 UNUN</td>
+      <td>300–1200 Ω</td>
+      <td>29 ft, 41 ft, helical 33 ft random wires</td>
+      <td>Best for long wires and random lengths</td>
+    </tr>
+    <tr>
+      <td>49:1 UNUN</td>
+      <td>2000–5000 Ω</td>
+      <td>20m EFHW, 40m EFHW</td>
+      <td>Standard EFHW transformer</td>
+    </tr>
+    <tr>
+      <td>64:1 UNUN</td>
+      <td>2500–6000 Ω</td>
+      <td>15m EFHW</td>
+      <td>Lower SWR than 49:1 on 15m</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>3. When to Use Each Transformer</h2>
+
+  <h3>3.1 1:1 Balun</h3>
+  <p>
+    Use for antennas that are naturally balanced:
+  </p>
+  <ul>
+    <li>Vertical dipoles</li>
+    <li>OCF vertical dipoles</li>
+    <li>Two-element vertical Yagis (driven element)</li>
+  </ul>
+
+  <h3>3.2 4:1 UNUN</h3>
+  <p>
+    Best for the Rybakov family:
+  </p>
+  <ul>
+    <li>17.5 ft</li>
+    <li>20.5 ft</li>
+    <li>25 ft</li>
+  </ul>
+  <p>
+    These lengths avoid resonance and stay in the 200–600 Ω range.
+  </p>
+
+  <h3>3.3 9:1 UNUN</h3>
+  <p>
+    Best for long or random wires:
+  </p>
+  <ul>
+    <li>29 ft</li>
+    <li>41 ft</li>
+    <li>Helical 33 ft</li>
+  </ul>
+
+  <div class="box">
+    <strong>Important:</strong>  
+    A 29 ft wire with a 49:1 transformer will produce extreme SWR and poor performance.
+  </div>
+
+  <h3>3.4 49:1 UNUN</h3>
+  <p>
+    Standard EFHW transformer for:
+  </p>
+  <ul>
+    <li>20m EFHW (33 ft)</li>
+    <li>40m EFHW (65 ft)</li>
+  </ul>
+
+  <h3>3.5 64:1 UNUN</h3>
+  <p>
+    Best for 15m EFHW:
+  </p>
+  <ul>
+    <li>Lower SWR</li>
+    <li>Less reflected power</li>
+    <li>Reduced transformer heating</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Transformer Behavior by Antenna Length</h2>
+
+  <table>
+    <tr>
+      <th>Length</th>
+      <th>Best Transformer</th>
+      <th>Reason</th>
+    </tr>
+    <tr>
+      <td>17.5 ft</td>
+      <td>4:1</td>
+      <td>Moderate impedance, non-resonant</td>
+    </tr>
+    <tr>
+      <td>20.5 ft</td>
+      <td>4:1</td>
+      <td>5/8-wave on 10m, stable on others</td>
+    </tr>
+    <tr>
+      <td>25 ft</td>
+      <td>4:1</td>
+      <td>Classic Rybakov</td>
+    </tr>
+    <tr>
+      <td>29 ft</td>
+      <td>9:1</td>
+      <td>Random-wire behavior</td>
+    </tr>
+    <tr>
+      <td>41 ft</td>
+      <td>9:1</td>
+      <td>Long-wire impedance</td>
+    </tr>
+    <tr>
+      <td>33 ft (EFHW)</td>
+      <td>49:1</td>
+      <td>Half-wave on 20m</td>
+    </tr>
+    <tr>
+      <td>21 ft 11 in (EFHW)</td>
+      <td>64:1</td>
+      <td>Half-wave on 15m</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>5. Transformer Warnings</h2>
+
+  <div class="box">
+    <strong>⚠️ Using the wrong transformer ratio can cause:</strong>
+    <ul>
+      <li>High SWR</li>
+      <li>Overheated cores</li>
+      <li>Reduced ERP</li>
+      <li>RF on the coax shield</li>
+      <li>Unstable tuner behavior</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <strong>⚠️ Never use a 49:1 on a random wire.</strong><br>
+    It is designed for EFHW antennas only.
+  </div>
+</section>
+
+<section>
+  <h2>6. Navigation</h2>
+  <p>
+    Return to the main calculator:<br>
+    <a href="../index.html">HF Vertical Designer</a>
+  </p>
+</section>
+
+</main>
+</body>
+</html>
 
