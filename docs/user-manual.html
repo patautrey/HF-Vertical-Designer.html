@@ -1,1 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HF Vertical Designer – User Manual</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#020617;color:#e5e7eb;line-height:1.55;}
+header{padding:16px 20px;background:#0f172a;border-bottom:1px solid #1f2937;}
+h1{margin:0;font-size:1.45rem;}
+main{padding:22px;max-width:900px;margin:auto;}
+section{margin-bottom:34px;}
+h2{font-size:1.25rem;margin-bottom:8px;border-bottom:1px solid #1f2937;padding-bottom:4px;}
+h3{font-size:1.05rem;margin-top:14px;margin-bottom:6px;color:#93c5fd;}
+p{font-size:0.95rem;color:#cbd5e1;margin-bottom:10px;}
+ul{margin-top:6px;margin-bottom:10px;}
+li{margin-bottom:4px;}
+code{background:#1e293b;padding:2px 4px;border-radius:4px;font-size:0.85rem;color:#93c5fd;}
+.box{background:#0b1120;border:1px solid #1f2937;border-radius:6px;padding:12px;margin-top:10px;}
+a{color:#38bdf8;text-decoration:none;}
+a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<header>
+  <h1>HF Vertical Designer – User Manual</h1>
+</header>
+
+<main>
+
+<section>
+  <p>
+    This User Manual provides a complete reference for the HF Vertical Designer.  
+    It explains every input, every calculation, and the RF theory behind the tool.  
+    Use this manual when you want to understand how the calculator models  
+    impedance, SWR, ERP, transformer behavior, and multi-band capability.
+  </p>
+</section>
+
+<section>
+  <h2>1. Overview</h2>
+  <p>
+    The HF Vertical Designer is a modeling engine for portable and fixed HF vertical antennas.  
+    It evaluates:
+  </p>
+  <ul>
+    <li>Antenna geometry (straight, foldover, helical)</li>
+    <li>Transformer / UNUN selection</li>
+    <li>Feedline type and length</li>
+    <li>Counterpoise and radial systems</li>
+    <li>Environmental effects (soil, saltwater, height)</li>
+    <li>SWR with and without a tuner</li>
+    <li>ERP per band</li>
+    <li>Radiation patterns (azimuth, elevation, donut)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>2. Antenna Geometry</h2>
+
+  <h3>2.1 Element Length</h3>
+  <p>
+    The most important input. Determines electrical behavior across all HF bands.  
+    Examples:
+  </p>
+  <ul>
+    <li>17.5 ft – ultra-portable, 20–6m</li>
+    <li>20.5 ft – 5/8-wave on 10m</li>
+    <li>25 ft – classic Rybakov, 40–6m</li>
+    <li>29 ft – random-wire 9:1, 40–10m</li>
+    <li>33 ft – 20m EFHW</li>
+    <li>41 ft – 80–10m long vertical</li>
+  </ul>
+
+  <h3>2.2 Mast Height</h3>
+  <p>
+    Determines how much of the wire is vertical.  
+    If the wire exceeds mast height, use foldover or helical mode.
+  </p>
+
+  <h3>2.3 Foldover Mode</h3>
+  <p>
+    Models DX Commander–style geometry where the top of the wire bends downward.  
+    Vertical portion = mast height.  
+    Folded portion contributes partial electrical length.
+  </p>
+
+  <h3>2.4 Helical Mode</h3>
+  <p>
+    Models wrapping the top portion of the wire around the mast.  
+    This preserves electrical length while reducing physical height.  
+    Used for 33 ft EFHW on short poles or 41 ft verticals on 10 m poles.
+  </p>
+
+  <h3>2.5 Counterpoise</h3>
+  <p>
+    Required for EFHW and random-wire systems.  
+    Typical length: 5% of wavelength (e.g., 1 m for 20m EFHW).
+  </p>
+</section>
+
+<section>
+  <h2>3. Transformer / UNUN Selection</h2>
+
+  <h3>3.1 1:1 Balun</h3>
+  <p>Used for vertical dipoles and OCF vertical dipoles.</p>
+
+  <h3>3.2 4:1 UNUN</h3>
+  <p>Used for Rybakov family: 17.5 ft, 20.5 ft, 25 ft.</p>
+
+  <h3>3.3 9:1 UNUN</h3>
+  <p>Used for 29 ft, 41 ft, and helical 33 ft random wires.</p>
+
+  <h3>3.4 49:1 UNUN</h3>
+  <p>Used for EFHW verticals (20m, 40m).</p>
+
+  <h3>3.5 64:1 UNUN</h3>
+  <p>Optimal for 15m EFHW (lower SWR, less core stress).</p>
+
+  <div class="box">
+    <strong>Tip:</strong>  
+    Wrong transformer ratio = high SWR + wasted power + hot cores.
+  </div>
+</section>
+
+<section>
+  <h2>4. Feedline Modeling</h2>
+
+  <h3>4.1 Coax Types</h3>
+  <ul>
+    <li>LMR‑400 – lowest loss</li>
+    <li>RG‑213 – field standard</li>
+    <li>RG‑8X – portable-friendly</li>
+    <li>RG‑58 – ultralight, highest loss</li>
+  </ul>
+
+  <h3>4.2 Ladder Line</h3>
+  <p>
+    Used for doublets and OCF systems.  
+    High VF, low loss, but requires a tuner.
+  </p>
+
+  <h3>4.3 Electrical Length</h3>
+  <p>
+    The tool computes electrical length in degrees based on VF and frequency.
+  </p>
+
+  <h3>4.4 Coax Loss</h3>
+  <p>
+    Loss is interpolated between 30 MHz and 50 MHz reference points.
+  </p>
+</section>
+
+<section>
+  <h2>5. Environment & Ground System</h2>
+
+  <h3>5.1 Soil Type</h3>
+  <ul>
+    <li>Saltwater – +3 dB low-angle gain</li>
+    <li>Good ground – +1 dB</li>
+    <li>Average – baseline</li>
+    <li>Inland poor soil – reduced efficiency</li>
+  </ul>
+
+  <h3>5.2 Radials</h3>
+  <p>
+    4–7 radials at ~16 ft dramatically improve efficiency for Rybakov/random-wire systems.
+  </p>
+
+  <h3>5.3 Time of Day</h3>
+  <ul>
+    <li>Day – higher-angle bias</li>
+    <li>Night – slightly lower angles</li>
+    <li>Grayline – enhanced low-angle propagation</li>
+  </ul>
+</section>
+
+<section>
+  <h2>6. Band Capability Detection</h2>
+  <p>
+    The tool evaluates each HF band (80m–6m) and classifies it as:
+  </p>
+  <ul>
+    <li><strong>Usable</strong> – SWR ≤ 3 without tuner</li>
+    <li><strong>Tuner</strong> – SWR ≤ 10 with tuner</li>
+    <li><strong>Not matchable</strong> – SWR too high</li>
+  </ul>
+
+  <h3>6.1 EFHW Harmonics</h3>
+  <p>
+    EFHW verticals are naturally resonant on harmonics:
+  </p>
+  <ul>
+    <li>20m EFHW → 20m, 10m, 40m (with tuner)</li>
+    <li>15m EFHW → 15m, 10m, 6m</li>
+  </ul>
+
+  <h3>6.2 Rybakov Family</h3>
+  <p>
+    Non-resonant lengths avoid impedance extremes and tune easily across many bands.
+  </p>
+</section>
+
+<section>
+  <h2>7. SWR Modeling</h2>
+  <p>
+    SWR is computed from:
+  </p>
+  <ul>
+    <li>Estimated feedpoint impedance</li>
+    <li>Transformer ratio</li>
+    <li>Coax transformation</li>
+  </ul>
+
+  <h3>7.1 With Tuner</h3>
+  <p>
+    The tool assumes a modern ATU can reduce SWR to ~1.5:1 on any band within matching range.
+  </p>
+</section>
+
+<section>
+  <h2>8. ERP Calculation</h2>
+  <p>
+    ERP is computed from:
+  </p>
+  <ul>
+    <li>TX power</li>
+    <li>Antenna gain (height + type)</li>
+    <li>Ground conductivity</li>
+    <li>Coax loss</li>
+    <li>SWR mismatch loss</li>
+  </ul>
+
+  <div class="box">
+    <strong>Saltwater Example:</strong><br>
+    A 25 ft Rybakov at 100 W near saltwater can produce ERP equivalent to 200–300 W inland.
+  </div>
+</section>
+
+<section>
+  <h2>9. Radiation Patterns</h2>
+  <p>
+    The tool displays:
+  </p>
+  <ul>
+    <li>Azimuth (top-down)</li>
+    <li>Elevation (side-view)</li>
+    <li>Donut projection (3D pattern)</li>
+  </ul>
+  <p>
+    These are approximations based on antenna type and height.
+  </p>
+</section>
+
+<section>
+  <h2>10. Navigation</h2>
+  <p>
+    Return to the main calculator:<br>
+    <a href="../index.html">HF Vertical Designer</a>
+  </p>
+</section>
+
+</main>
+</body>
+</html>
 
