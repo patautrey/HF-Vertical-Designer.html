@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HF Vertical Designer – Feedline Loss Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#020617;color:#e5e7eb;line-height:1.55;}
+header{padding:16px 20px;background:#0f172a;border-bottom:1px solid #1f2937;}
+h1{margin:0;font-size:1.45rem;}
+main{padding:22px;max-width:900px;margin:auto;}
+section{margin-bottom:34px;}
+h2{font-size:1.25rem;margin-bottom:8px;border-bottom:1px solid #1f2937;padding-bottom:4px;}
+label{display:block;margin-top:10px;margin-bottom:4px;font-size:0.9rem;color:#cbd5e1;}
+input,select{width:100%;padding:6px;background:#0b1120;border:1px solid #1f2937;border-radius:4px;color:#e5e7eb;font-size:0.9rem;}
+button{margin-top:14px;padding:8px 12px;background:#22c55e;border:none;border-radius:4px;color:#020617;font-weight:600;cursor:pointer;}
+button:hover{background:#16a34a;}
+.result-box{background:#0b1120;border:1px solid #1f2937;border-radius:6px;padding:14px;margin-top:16px;}
+code{background:#1e293b;padding:2px 4px;border-radius:4px;font-size:0.85rem;color:#93c5fd;}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:0.9rem;}
+th,td{border:1px solid #1f2937;padding:6px 8px;text-align:left;}
+th{background:#0b1120;}
+a{color:#38bdf8;text-decoration:none;}
+a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Feedline Loss Calculator</h1>
+</header>
+
+<main>
+
+<section>
+  <p>
+    This tool calculates coaxial feedline loss based on cable type, length, and frequency.  
+    It uses interpolated loss values between 30 MHz and 50 MHz for realistic HF/VHF estimates.
+  </p>
+</section>
+
+<section>
+  <h2>1. Input</h2>
+
+  <label for="feed_type">Feedline Type</label>
+  <select id="feed_type">
+    <option value="lmr400">LMR‑400</option>
+    <option value="rg213">RG‑213</option>
+    <option value="rg8x">RG‑8X</option>
+    <option value="rg58">RG‑58</option>
+  </select>
+
+  <label for="feed_length">Feedline Length (ft)</label>
+  <input id="feed_length" type="number" step="1" value="50">
+
+  <label for="freq">Frequency (MHz)</label>
+  <input id="freq" type="number" step="0.01" value="14.1">
+
+  <button onclick="calcLoss()">Calculate Loss</button>
+</section>
+
+<section>
+  <h2>2. Results</h2>
+  <div id="results" class="result-box">
+    Enter feedline details to calculate loss.
+  </div>
+</section>
+
+<section>
+  <h2>3. Navigation</h2>
+  <p>
+    Return to the main calculator:<br>
+    <a href="../index.html">HF Vertical Designer</a>
+  </p>
+</section>
+
+</main>
+
+<script>
+const COAX = {
+  lmr400: { loss30: 1.0, loss50: 1.5 },
+  rg213:  { loss30: 1.3, loss50: 2.0 },
+  rg8x:   { loss30: 2.0, loss50: 3.0 },
+  rg58:   { loss30: 2.7, loss50: 4.5 }
+};
+
+function interpolateLoss(freq, type){
+  const c = COAX[type];
+  if(!c) return 0;
+
+  const f1 = 30, f2 = 50;
+  const l1 = c.loss30, l2 = c.loss50;
+
+  if(freq <= f1) return l1 * (freq / f1);
+  if(freq >= f2) return l2 * (freq / f2);
+
+  const x = (freq - f1) / (f2 - f1);
+  return l1 + x * (l2 - l1);
+}
+
+function calcLoss(){
+  const type = document.getElementById("feed_type").value;
+  const length = parseFloat(document.getElementById("feed_length").value);
+  const freq = parseFloat(document.getElementById("freq").value);
+
+  const per100 = interpolateLoss(freq, type);
+  const totalLoss = per100 * (length / 100);
+
+  const powerIn = 100;
+  const powerOut = powerIn * Math.pow(10, -totalLoss/10);
+
+  let html = `
+    <p><strong>Feedline Type:</strong> ${type.toUpperCase()}</p>
+    <p><strong>Frequency:</strong> ${freq.toFixed(2)} MHz</p>
+    <p><strong>Length:</strong> ${length.toFixed(1)} ft</p>
+
+    <table>
+      <tr><th>Metric</th><th>Value</th></tr>
+      <tr><td>Loss per 100 ft</td><td>${per100.toFixed(2)} dB</td></tr>
+      <tr><td>Total Loss</td><td>${totalLoss.toFixed(2)} dB</td></tr>
+      <tr><td>Power In (example)</td><td>100 W</td></tr>
+      <tr><td>Power Out</td><td>${powerOut.toFixed(1)} W</td></tr>
+    </table>
+  `;
+
+  document.getElementById("results").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
 
